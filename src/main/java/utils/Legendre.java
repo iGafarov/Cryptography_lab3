@@ -4,28 +4,38 @@ import java.math.BigInteger;
 
 public class Legendre {
 
-    public static int getSymbol(BigInteger k, BigInteger n) {
-        if (k.compareTo(BigInteger.ZERO) < 0 || n.remainder(BigInteger.valueOf(2)).equals(BigInteger.ZERO)) {
+    public static BigInteger getSymbol(BigInteger a, BigInteger p) {
+        if (a.equals(BigInteger.ONE)) {
+            return BigInteger.ONE;
+        }
+        if (a.mod(BigInteger.valueOf(2)).equals(BigInteger.ZERO)) {
+            BigInteger degree = p.pow(2).subtract(BigInteger.ONE).divide(BigInteger.valueOf(8));
+            getSymbol(p.mod(a), a).multiply((degree.mod(BigInteger.valueOf(2)).equals(BigInteger.ZERO) ? BigInteger. ));
+        }
+    }
+
+    public static int getSymbol(BigInteger a, BigInteger n) {
+        if (a.compareTo(BigInteger.ZERO) < 0 || n.remainder(BigInteger.valueOf(2)).equals(BigInteger.ZERO)) {
             throw new IllegalArgumentException("Число n - четное: " + n);
         }
-        k = k.remainder(n);
+        a = a.remainder(n);
         int jacobi = 1;
-        while (k.compareTo(BigInteger.ZERO) > 0) {
-            while (k.remainder(BigInteger.valueOf(2)).equals(BigInteger.ZERO)) {
-                k = k.divide(BigInteger.valueOf(2));
+        while (a.compareTo(BigInteger.ZERO) > 0) {
+            while (a.remainder(BigInteger.valueOf(2)).equals(BigInteger.ZERO)) {
+                a = a.divide(BigInteger.valueOf(2));
                 BigInteger r = n.remainder(BigInteger.valueOf(8));
                 if (r.equals(BigInteger.valueOf(3))) {
                     jacobi = -jacobi;
                 }
             }
             BigInteger temp = n;
-            n = k;
-            k = temp;
-            if (k.remainder(BigInteger.valueOf(4)).equals(BigInteger.valueOf(3)) &&
+            n = a;
+            a = temp;
+            if (a.remainder(BigInteger.valueOf(4)).equals(BigInteger.valueOf(3)) &&
                     n.remainder(BigInteger.valueOf(4)).equals(BigInteger.valueOf(3)) ) {
                 jacobi = -jacobi;
             }
-            k = k.remainder(n);
+            a = a.remainder(n);
         }
         if (n.equals(BigInteger.ONE)) {
             return jacobi;

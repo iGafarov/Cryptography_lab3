@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class Main {
 
     private static BigInteger n;
-    private static BigInteger a = BigInteger.ZERO;
+    private static BigInteger a;
 
 
     public static void main(String[] args) {
@@ -20,9 +20,7 @@ public class Main {
         List<BigInteger> aValues = new ArrayList<>();
         while (counter < 16) {
             System.out.println("Итерация: " + counter);
-            while (aValues.contains(a)) {
-                a = EvklidAlgorithm.nextRandomBigInteger(n);
-            }
+            a = EvklidAlgorithm.nextRandomBigInteger(n);
             if (!testCompositeByEvklid()) {
                 System.out.println("1.Число n: " + n + " составное");
                 ++composite;
@@ -42,6 +40,7 @@ public class Main {
     }
 
     private static boolean testEquivalence() {
+        int[] symbols = {-1, 0, -1};
         BigInteger degree = (n.subtract(BigInteger.ONE)).divide(BigInteger.valueOf(2));
         BigInteger tmp = a.modPow(degree, n);
         int legendre = Legendre.getSymbol(a, n);
