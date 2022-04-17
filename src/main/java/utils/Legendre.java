@@ -10,11 +10,18 @@ public class Legendre {
         }
         if (a.mod(BigInteger.valueOf(2)).equals(BigInteger.ZERO)) {
             BigInteger degree = p.pow(2).subtract(BigInteger.ONE).divide(BigInteger.valueOf(8));
-            getSymbol(p.mod(a), a).multiply((degree.mod(BigInteger.valueOf(2)).equals(BigInteger.ZERO) ? BigInteger. ));
+            return getSymbol(a.divide(BigInteger.valueOf(2)), p).multiply((degree.mod(BigInteger.valueOf(2))
+                    .equals(BigInteger.ZERO) ? BigInteger.ONE : BigInteger.valueOf(-1)));
+        } else if (!a.equals(BigInteger.ONE)){
+            BigInteger degree = a.subtract(BigInteger.ONE)
+                    .multiply(p.subtract(BigInteger.ONE)).divide(BigInteger.valueOf(4));
+            return getSymbol(p.mod(a), a).multiply((degree.mod(BigInteger.valueOf(2))
+                    .equals(BigInteger.ZERO) ? BigInteger.ONE : BigInteger.valueOf(-1)));
         }
+        return null;
     }
 
-    public static int getSymbol(BigInteger a, BigInteger n) {
+    /*public static int getSymbol(BigInteger a, BigInteger n) {
         if (a.compareTo(BigInteger.ZERO) < 0 || n.remainder(BigInteger.valueOf(2)).equals(BigInteger.ZERO)) {
             throw new IllegalArgumentException("Число n - четное: " + n);
         }
@@ -41,5 +48,5 @@ public class Legendre {
             return jacobi;
         }
         return 0;
-    }
+    }*/
 }

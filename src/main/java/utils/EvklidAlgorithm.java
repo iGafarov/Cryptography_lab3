@@ -19,6 +19,8 @@ public class EvklidAlgorithm {
         while( result.compareTo(n) >= 0 ) {
             result = new BigInteger(n.bitLength(), rand);
         }
+        if (result.equals(BigInteger.ZERO))
+            return nextRandomBigInteger(n);
         return result;
     }
 }

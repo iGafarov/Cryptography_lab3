@@ -18,7 +18,7 @@ public class Main {
         int counter = 0;
         int composite = 0;
         List<BigInteger> aValues = new ArrayList<>();
-        while (counter < 16) {
+        while (counter < 10) {
             System.out.println("Итерация: " + counter);
             a = EvklidAlgorithm.nextRandomBigInteger(n);
             if (!testCompositeByEvklid()) {
@@ -43,8 +43,12 @@ public class Main {
         int[] symbols = {-1, 0, -1};
         BigInteger degree = (n.subtract(BigInteger.ONE)).divide(BigInteger.valueOf(2));
         BigInteger tmp = a.modPow(degree, n);
-        int legendre = Legendre.getSymbol(a, n);
-        return tmp.equals(BigInteger.valueOf(legendre));
+        BigInteger legendre = Legendre.getSymbol(a, n);
+        if (tmp.equals(legendre) || (n.add(legendre).equals(tmp) && legendre.equals(BigInteger.valueOf(-1)))) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
